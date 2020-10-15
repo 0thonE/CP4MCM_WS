@@ -25,6 +25,11 @@ curl -kLo cloudctl-mc-plugin https://cp-console.apps.demo.ibmdte.net/rcm/plugins
 cloudctl login -a https://cp-console.apps.demo.ibmdte.net -u bob -p Passw0rd -n default
 cloudctl plugin install -f cloudctl-mc-plugin
 
+
+# add labels
 cloudctl mc describe cluster microk8s -n microk8s -c hub0
 
 cloudctl mc label cluster microk8s environment=QA -n microk8s
+
+# Deploy cloud 
+cloudctl mc label cluster microk8s ibm.com/cloud-native-monitoring=enabled -n microk8s
