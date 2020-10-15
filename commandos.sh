@@ -66,6 +66,11 @@ oc get svc
 ## ocp replica: vendor: OpenShift
 
 
+./oclogin.sh
+
+oc get pods -n multicluster-endpoint
+
+
 
  
  #########################################
@@ -75,14 +80,27 @@ oc get svc
 
 ## 3.1 Channel specification for the application
 
-#   troubleshooting
-    oc get nodes
-    oc get pods -n multicluster-endpoint
-    oc -n multicluster-endpoint  delete pod <name_pod>
-    oc get pods -n bookinfo
+sudo echo "--allow-privileged=true" >> /var/snap/microk8s/current/args/kube-apiserver
+sudo systemctl restart snap.microk8s.daemon-apiserver.service
+
+# #   troubleshooting
+#     oc get nodes
+#     oc get pods -n multicluster-endpoint
+#     oc -n multicluster-endpoint  delete pod <name_pod>
+#     oc get pods -n bookinfo
 
 
+kubectl get nodes
+
+kubectl get pods -n multicluster-endpoint
 
 
+curl -kLo cloudctl-mc-plugin https://cp-console.apps.demo.ibmdte.net/rcm/plugins/mc-linux-amd64
+cloudctl login -a https://cp-console.apps.demo.ibmdte.net -u bob -p Passw0rd -n default
+cloudctl plugin install -f cloudctl-mc-plugin
+
+cloudctl mc describe cluster microk8s -n microk8s -c hub0
+
+cloudctl mc label cluster microk8s environment=QA -n microk8s
 
 
